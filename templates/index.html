@@ -76,7 +76,12 @@
 
                     <div class="login-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
                         <a href="/" style="font-size:0.82rem; font-weight:600; color:var(--teal);"><i class="fas fa-arrow-left"></i> Project Overview</a>
-                        <span class="badge badge-info"><i class="fas fa-graduation-cap"></i> Academic Prototype</span>
+                        <div style="display:flex; align-items:center; gap:8px;">
+                            <button type="button" class="btn btn-sm btn-outline theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                                <i class="fas fa-moon theme-icon"></i>
+                            </button>
+                            <span class="badge badge-info"><i class="fas fa-graduation-cap"></i> Academic</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -155,6 +160,9 @@
                     <a href="/" class="btn btn-sm btn-outline" style="text-decoration:none;">
                         <i class="fas fa-home"></i> Project Landing
                     </a>
+                    <button class="btn btn-sm btn-outline theme-toggle-btn" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-moon theme-icon"></i> <span class="theme-text">Dark</span>
+                    </button>
                     <button class="btn btn-sm btn-outline" id="btn-load-demo" onclick="loadDemoData()">
                         <i class="fas fa-database"></i> Load Demo Data
                     </button>

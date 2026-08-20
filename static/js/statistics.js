@@ -30,6 +30,10 @@ function renderPriorityChart(data) {
 
     if (priorityChart) priorityChart.destroy();
 
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+    const gridColor = isDark ? 'rgba(255, 255, 255, 0.08)' : 'rgba(0, 0, 0, 0.05)';
+
     priorityChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -38,10 +42,10 @@ function renderPriorityChart(data) {
                 label: 'Patients',
                 data: [data.critical, data.serious, data.moderate, data.routine],
                 backgroundColor: [
-                    'rgba(239, 68, 68, 0.8)',
-                    'rgba(249, 115, 22, 0.8)',
-                    'rgba(234, 179, 8, 0.8)',
-                    'rgba(16, 185, 129, 0.8)'
+                    'rgba(239, 68, 68, 0.85)',
+                    'rgba(249, 115, 22, 0.85)',
+                    'rgba(234, 179, 8, 0.85)',
+                    'rgba(16, 185, 129, 0.85)'
                 ],
                 borderColor: [
                     '#ef4444', '#f97316', '#eab308', '#10b981'
@@ -60,11 +64,11 @@ function renderPriorityChart(data) {
             scales: {
                 y: {
                     beginAtZero: true,
-                    ticks: { stepSize: 1, font: { family: 'Plus Jakarta Sans', weight: '600' } },
-                    grid: { color: 'rgba(0,0,0,0.05)' }
+                    ticks: { stepSize: 1, color: textColor, font: { family: 'Plus Jakarta Sans', weight: '600' } },
+                    grid: { color: gridColor }
                 },
                 x: {
-                    ticks: { font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' } },
+                    ticks: { color: textColor, font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' } },
                     grid: { display: false }
                 }
             }
@@ -78,6 +82,9 @@ function renderStatusChart(data) {
 
     if (statusChart) statusChart.destroy();
 
+    const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+    const textColor = isDark ? '#cbd5e1' : '#475569';
+
     statusChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -85,11 +92,11 @@ function renderStatusChart(data) {
             datasets: [{
                 data: [data.waiting, data.in_treatment, data.completed],
                 backgroundColor: [
-                    'rgba(249, 115, 22, 0.8)',
-                    'rgba(59, 130, 246, 0.8)',
-                    'rgba(16, 185, 129, 0.8)'
+                    'rgba(249, 115, 22, 0.85)',
+                    'rgba(59, 130, 246, 0.85)',
+                    'rgba(16, 185, 129, 0.85)'
                 ],
-                borderColor: ['#f97316', '#3b82f6', '#10b981'],
+                borderColor: isDark ? ['#ea580c', '#2563eb', '#059669'] : ['#f97316', '#3b82f6', '#10b981'],
                 borderWidth: 2,
                 hoverOffset: 8
             }]
@@ -103,6 +110,7 @@ function renderStatusChart(data) {
                     position: 'bottom',
                     labels: {
                         padding: 20,
+                        color: textColor,
                         font: { family: 'Plus Jakarta Sans', size: 12, weight: '600' },
                         usePointStyle: true,
                         pointStyleWidth: 10

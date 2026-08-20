@@ -262,8 +262,65 @@ function viewPatient(patientId) {
     }, 100);
 }
 
+// ─── Theme Management (Dark / Light Mode) ──────────────────────
+function initTheme() {
+    const savedTheme = localStorage.getItem('hqm_theme');
+    if (savedTheme) {
+        setTheme(savedTheme);
+    } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        setTheme('dark');
+    } else {
+        setTheme('light');
+    }
+}
+
+function setTheme(theme) {
+    if (theme === 'dark') {
+        document.documentElement.setAttribute('data-theme', 'dark');
+        document.body.classList.add('dark-theme');
+        localStorage.setItem('hqm_theme', 'dark');
+    } else {
+        document.documentElement.removeAttribute('data-theme');
+        document.body.classList.remove('dark-theme');
+        localStorage.setItem('hqm_theme', 'light');
+    }
+    updateThemeUI(theme);
+}
+
+function toggleTheme() {
+    const current = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+    const newTheme = current === 'dark' ? 'light' : 'dark';
+    setTheme(newTheme);
+    
+    // If on statistics page, refresh charts
+    const activePage = document.querySelector('.nav-item.active');
+    if (activePage && activePage.dataset.page === 'statistics') {
+        loadStatistics();
+    }
+}
+
+function updateThemeUI(theme) {
+    const icons = document.querySelectorAll('.theme-icon');
+    const texts = document.querySelectorAll('.theme-text');
+    
+    icons.forEach(icon => {
+        if (theme === 'dark') {
+            icon.className = 'fas fa-sun theme-icon';
+            icon.style.color = '#f59e0b';
+        } else {
+            icon.className = 'fas fa-moon theme-icon';
+            icon.style.color = '';
+        }
+    });
+    
+    texts.forEach(txt => {
+        txt.textContent = theme === 'dark' ? 'Light' : 'Dark';
+    });
+}
+
 // ─── Init ───────────────────────────────────────────────────────
 (function init() {
+    initTheme();
     const user = getUser();
     if (user) {
         currentUser = user;

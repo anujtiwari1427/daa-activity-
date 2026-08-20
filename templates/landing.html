@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hospital Queue Management System - DAA Activity by Rahul Behrani, Atharva Kadam, Prathamesh Kalagate, Simon Masih, Anuj Tiwari, Adarsh Tiwari. Priority Queue implemented using Max Heap.">
+    <title>Hospital Queue Management | DAA Activity Project</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Landing Page CSS -->
+    <link rel="stylesheet" href="/static/css/landing.css">
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  NAVBAR                                                  -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <nav class="land-nav">
+        <a href="#hero" class="land-logo">
+            <div class="land-logo-icon">
+                <i class="fas fa-hospital-alt"></i>
+            </div>
+            <div class="land-logo-text">
+                HQM Project
+                <span>DAA Academic Activity</span>
+            </div>
+        </a>
+
+        <ul class="land-links">
+            <li><a href="#team"><i class="fas fa-users"></i> Team Members</a></li>
+            <li><a href="#algorithm"><i class="fas fa-project-diagram"></i> Algorithm & Heap</a></li>
+            <li><a href="#features"><i class="fas fa-layer-group"></i> Architecture</a></li>
+            <li><a href="/portal" class="land-nav-btn"><i class="fas fa-rocket"></i> Launch Portal</a></li>
+        </ul>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  HERO SECTION                                            -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <header id="hero" class="hero-section">
+        <div class="hero-content">
+            <div class="badge-daa">
+                <i class="fas fa-graduation-cap"></i> Design & Analysis of Algorithms — Project
+            </div>
+            <h1 class="hero-title">
+                Hospital Queue <br>
+                <span class="gradient-text">Management System</span>
+            </h1>
+            <p class="hero-subtitle">
+                Efficient patient prioritization using a custom-engineered <strong>Max Heap Priority Queue</strong>. Critical emergencies are served instantaneously with optimal logarithmic time complexities.
+            </p>
+
+            <div class="hero-actions">
+                <a href="/portal" class="btn-hero-primary">
+                    <i class="fas fa-desktop"></i> Open Live Portal
+                </a>
+                <a href="#team" class="btn-hero-secondary">
+                    <i class="fas fa-users"></i> Group Members
+                </a>
+                <a href="/portal#visualizer" class="btn-hero-secondary">
+                    <i class="fas fa-tree"></i> Heap Visualizer
+                </a>
+            </div>
+
+            <div class="hero-badges-bar">
+                <div class="hero-mini-stat">
+                    <strong>Max Heap</strong>
+                    <span>Core Data Structure</span>
+                </div>
+                <div class="hero-mini-stat">
+                    <strong>O(log n)</strong>
+                    <span>Insert & Extract</span>
+                </div>
+                <div class="hero-mini-stat">
+                    <strong>O(1)</strong>
+                    <span>Peek Urgent Case</span>
+                </div>
+                <div class="hero-mini-stat">
+                    <strong>6 Members</strong>
+                    <span>Collaborative Team</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Visual Preview -->
+        <div class="hero-visual">
+            <div class="hero-glass-card">
+                <div class="glass-header">
+                    <div class="glass-title">
+                        <i class="fas fa-stream"></i> Active Priority Triage
+                    </div>
+                    <div class="pulse-badge">
+                        <span class="pulse-dot"></span> Live Heap Sync
+                    </div>
+                </div>
+
+                <div class="preview-queue-list">
+                    <div class="preview-patient-item">
+                        <div class="preview-patient-left">
+                            <div class="preview-rank rank-1">1</div>
+                            <div>
+                                <div class="preview-patient-name">Priya Sharma</div>
+                                <div class="preview-patient-cond">Emergency (Chest Pain)</div>
+                            </div>
+                        </div>
+                        <span class="preview-priority-tag tag-crit">Priority 10</span>
+                    </div>
+
+                    <div class="preview-patient-item">
+                        <div class="preview-patient-left">
+                            <div class="preview-rank rank-2">2</div>
+                            <div>
+                                <div class="preview-patient-name">Neha Patil</div>
+                                <div class="preview-patient-cond">Accident & Trauma</div>
+                            </div>
+                        </div>
+                        <span class="preview-priority-tag tag-crit">Priority 9</span>
+                    </div>
+
+                    <div class="preview-patient-item">
+                        <div class="preview-patient-left">
+                            <div class="preview-rank rank-3">3</div>
+                            <div>
+                                <div class="preview-patient-name">Rohan Shah</div>
+                                <div class="preview-patient-cond">Arm Fracture</div>
+                            </div>
+                        </div>
+                        <span class="preview-priority-tag tag-ser">Priority 5</span>
+                    </div>
+
+                    <div class="preview-patient-item">
+                        <div class="preview-patient-left">
+                            <div class="preview-rank rank-4">4</div>
+                            <div>
+                                <div class="preview-patient-name">Rahul Mehta</div>
+                                <div class="preview-patient-cond">High Fever</div>
+                            </div>
+                        </div>
+                        <span class="preview-priority-tag tag-rout">Priority 2</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  TEAM MEMBERS SECTION (FEATURED)                         -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section id="team" class="land-section team-section">
+        <div class="section-head">
+            <span class="section-tag"><i class="fas fa-award"></i> DAA Activity Group</span>
+            <h2 class="section-title">Project Creators & Team Members</h2>
+            <p class="section-desc">
+                Developed as a comprehensive practical demonstration for the <strong>Design and Analysis of Algorithms (DAA)</strong> curriculum.
+            </p>
+        </div>
+
+        <div class="team-grid-land">
+            <!-- Rahul Behrani -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h3 class="member-name">Rahul Behrani</h3>
+                <span class="member-roll">Roll No: 04</span>
+                <p class="member-role">Algorithm Architecture & Max Heap Implementation</p>
+                <div class="member-badges">
+                    <span class="member-pill">Max Heap</span>
+                    <span class="member-pill">DAA Logic</span>
+                    <span class="member-pill">Complexity</span>
+                </div>
+            </div>
+
+            <!-- Atharva Kadam -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-user-gear"></i>
+                </div>
+                <h3 class="member-name">Atharva Kadam</h3>
+                <span class="member-roll">Roll No: 14</span>
+                <p class="member-role">Backend API, Routing & Queue Management Services</p>
+                <div class="member-badges">
+                    <span class="member-pill">Flask APIs</span>
+                    <span class="member-pill">Queue Flow</span>
+                    <span class="member-pill">Integration</span>
+                </div>
+            </div>
+
+            <!-- Prathamesh Kalagate -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-laptop-code"></i>
+                </div>
+                <h3 class="member-name">Prathamesh Kalagate</h3>
+                <span class="member-roll">Roll No: 15</span>
+                <p class="member-role">Interactive Algorithm Visualizer & SVG Tree Animations</p>
+                <div class="member-badges">
+                    <span class="member-pill">SVG Trees</span>
+                    <span class="member-pill">Heapify Viz</span>
+                    <span class="member-pill">Animations</span>
+                </div>
+            </div>
+
+            <!-- Simon Masih -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-database"></i>
+                </div>
+                <h3 class="member-name">Simon Masih</h3>
+                <span class="member-roll">Roll No: 19</span>
+                <p class="member-role">Database Design, Schema Architecture & MySQL Compatibility</p>
+                <div class="member-badges">
+                    <span class="member-pill">SQLite / MySQL</span>
+                    <span class="member-pill">Data Models</span>
+                    <span class="member-pill">Queries</span>
+                </div>
+            </div>
+
+            <!-- Anuj Tiwari -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-palette"></i>
+                </div>
+                <h3 class="member-name">Anuj Tiwari</h3>
+                <span class="member-roll">Roll No: 36</span>
+                <p class="member-role">Frontend UI/UX Design System & Responsive Dashboards</p>
+                <div class="member-badges">
+                    <span class="member-pill">Healthcare UI</span>
+                    <span class="member-pill">CSS Design</span>
+                    <span class="member-pill">Charts</span>
+                </div>
+            </div>
+
+            <!-- Adarsh Tiwari -->
+            <div class="team-card-land">
+                <div class="team-avatar-box">
+                    <i class="fas fa-stethoscope"></i>
+                </div>
+                <h3 class="member-name">Adarsh Tiwari</h3>
+                <span class="member-roll">Roll No: 35</span>
+                <p class="member-role">Doctor Workflow, Analytics Engine & System Verification</p>
+                <div class="member-badges">
+                    <span class="member-pill">Doctor Portal</span>
+                    <span class="member-pill">Statistics</span>
+                    <span class="member-pill">Testing</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  ALGORITHM & MAX HEAP SHOWCASE                           -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section id="algorithm" class="land-section algo-section">
+        <div class="section-head">
+            <span class="section-tag"><i class="fas fa-microchip"></i> Algorithmic Core</span>
+            <h2 class="section-title">Why Max Heap Priority Queue?</h2>
+            <p class="section-desc">
+                In healthcare triage, conventional FIFO (First-In, First-Out) queues can lead to catastrophic delays for critical patients. Max Heap guarantees immediate access to the highest urgency cases.
+            </p>
+        </div>
+
+        <div class="algo-grid">
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-bolt"></i></div>
+                <h4>Insert (Heapify-Up)</h4>
+                <p>New patient placed at array leaf and bubbled up by priority comparisons.</p>
+                <span class="algo-complexity-tag">Time: O(log n)</span>
+            </div>
+
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-hand-holding-medical"></i></div>
+                <h4>Extract-Max (Heapify-Down)</h4>
+                <p>Highest-priority root is called; last element moves to root and sinks into place.</p>
+                <span class="algo-complexity-tag">Time: O(log n)</span>
+            </div>
+
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-eye"></i></div>
+                <h4>Peek Highest Priority</h4>
+                <p>Root element index [0] is inspected without removing it from the queue.</p>
+                <span class="algo-complexity-tag">Time: O(1)</span>
+            </div>
+
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-network-wired"></i></div>
+                <h4>Build Heap Construction</h4>
+                <p>Bottom-up heapify algorithm converting an unsorted database state into a valid heap.</p>
+                <span class="algo-complexity-tag">Time: O(n)</span>
+            </div>
+        </div>
+
+        <!-- End-to-end Pipeline Flow -->
+        <div class="flow-container">
+            <div class="flow-steps-land">
+                <div class="flow-box-land">
+                    <i class="fas fa-user-plus"></i>
+                    <span>Patient Intake</span>
+                </div>
+                <div class="flow-arrow-land"><i class="fas fa-chevron-right"></i></div>
+                <div class="flow-box-land">
+                    <i class="fas fa-sliders-h"></i>
+                    <span>Priority (1–10)</span>
+                </div>
+                <div class="flow-arrow-land"><i class="fas fa-chevron-right"></i></div>
+                <div class="flow-box-land highlight">
+                    <i class="fas fa-project-diagram"></i>
+                    <span>Max Heap Insert</span>
+                </div>
+                <div class="flow-arrow-land"><i class="fas fa-chevron-right"></i></div>
+                <div class="flow-box-land">
+                    <i class="fas fa-sort-amount-down"></i>
+                    <span>Live Reordered Queue</span>
+                </div>
+                <div class="flow-arrow-land"><i class="fas fa-chevron-right"></i></div>
+                <div class="flow-box-land highlight">
+                    <i class="fas fa-user-md"></i>
+                    <span>Doctor Extract-Max</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  SYSTEM FEATURES SECTION                                 -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section id="features" class="land-section">
+        <div class="section-head">
+            <span class="section-tag"><i class="fas fa-cogs"></i> System Modules</span>
+            <h2 class="section-title">Engineered For Real Hospital Scenarios</h2>
+            <p class="section-desc">
+                An integrated clinical solution that unites algorithmic data structures with an intuitive medical interface.
+            </p>
+        </div>
+
+        <div class="algo-grid">
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-chart-line"></i></div>
+                <h4>Main Dashboard</h4>
+                <p>Live statistics counters, emergency alerts, and immediate priority queue table.</p>
+            </div>
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-users-cog"></i></div>
+                <h4>Search & Filter Queue</h4>
+                <p>Multi-attribute query engine with priority classification badges and arrival tie-breakers.</p>
+            </div>
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-stethoscope"></i></div>
+                <h4>Doctor Consultation Portal</h4>
+                <p>Dedicated physician console with single-click next patient calls and treatment logs.</p>
+            </div>
+            <div class="algo-card">
+                <div class="algo-icon"><i class="fas fa-chart-pie"></i></div>
+                <h4>Real-Time Analytics</h4>
+                <p>Interactive Chart.js visualizations covering urgency distribution and status metrics.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  CTA / LAUNCH SECTION                                    -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <section class="cta-section">
+        <div class="cta-box">
+            <h2 class="cta-title">Ready to Explore the Live System?</h2>
+            <p class="cta-desc">
+                Launch the application to experience live patient triage, test Max Heap insertions, and inspect the real-time algorithm visualizer.
+            </p>
+            <div class="cta-buttons">
+                <a href="/portal" class="btn-hero-primary">
+                    <i class="fas fa-sign-in-alt"></i> Enter Web Application
+                </a>
+                <a href="/portal" onclick="localStorage.setItem('hqm_user', JSON.stringify({username:'admin', role:'Admin'}));" class="btn-hero-secondary">
+                    <i class="fas fa-user-shield"></i> Instant Admin Demo
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  FOOTER                                                  -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <footer class="land-footer">
+        <p><strong>Hospital Queue Management System</strong> — Academic Submission</p>
+        <p>Subject: <span class="highlight-gold">Design and Analysis of Algorithms (DAA)</span> | Concept: <span class="highlight-gold">Priority Queue using Max Heap</span></p>
+        <p style="margin-top: 14px; opacity: 0.75; font-size: 0.8rem;">
+            Created by Rahul Behrani (04), Atharva Kadam (14), Prathamesh Kalagate (15), Simon Masih (19), Anuj Tiwari (36), Adarsh Tiwari (35)
+        </p>
+    </footer>
+
+</body>
+</html>

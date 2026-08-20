@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Hospital Queue Management System — Priority Queue using Max Heap. A DAA college project demonstrating efficient patient prioritization.">
+    <title>Hospital Queue Management | DAA Project</title>
+
+    <!-- Modern Premium Fonts: Plus Jakarta Sans, Outfit & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+    <!-- App CSS -->
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  LOGIN PAGE                                             -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div id="login-page" class="login-page">
+        <div class="login-bg">
+            <div class="login-container">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="login-icon">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <h1>Hospital Queue Management</h1>
+                        <p class="login-subtitle">Efficient Patient Prioritization Using Priority Queue</p>
+                    </div>
+
+                    <form id="login-form" class="login-form">
+                        <div class="form-group">
+                            <label for="login-username"><i class="fas fa-user"></i> Username</label>
+                            <input type="text" id="login-username" placeholder="Enter username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-password"><i class="fas fa-lock"></i> Password</label>
+                            <input type="password" id="login-password" placeholder="Enter password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="login-role"><i class="fas fa-id-badge"></i> Role</label>
+                            <select id="login-role">
+                                <option value="Admin">Admin</option>
+                                <option value="Doctor">Doctor</option>
+                                <option value="Receptionist">Receptionist</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">
+                            <i class="fas fa-sign-in-alt"></i> Login
+                        </button>
+                    </form>
+
+                    <div class="demo-logins">
+                        <p class="demo-label">Quick Demo Login</p>
+                        <div class="demo-buttons">
+                            <button class="btn btn-demo" onclick="demoLogin('admin','admin','Admin')">
+                                <i class="fas fa-user-shield"></i> Admin
+                            </button>
+                            <button class="btn btn-demo" onclick="demoLogin('doctor','doctor','Doctor')">
+                                <i class="fas fa-user-md"></i> Doctor
+                            </button>
+                            <button class="btn btn-demo" onclick="demoLogin('receptionist','receptionist','Receptionist')">
+                                <i class="fas fa-user-nurse"></i> Receptionist
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-footer" style="display:flex; justify-content:space-between; align-items:center; margin-top:20px;">
+                        <a href="/" style="font-size:0.82rem; font-weight:600; color:var(--teal);"><i class="fas fa-arrow-left"></i> Project Overview</a>
+                        <span class="badge badge-info"><i class="fas fa-graduation-cap"></i> Academic Prototype</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════════════════ -->
+    <!--  MAIN APP SHELL                                         -->
+    <!-- ════════════════════════════════════════════════════════ -->
+    <div id="app-shell" class="app-shell" style="display:none;">
+
+        <!-- Sidebar -->
+        <aside id="sidebar" class="sidebar">
+            <div class="sidebar-header">
+                <div class="sidebar-logo">
+                    <i class="fas fa-hospital"></i>
+                    <span>HQM</span>
+                </div>
+                <button id="sidebar-toggle" class="sidebar-toggle" aria-label="Toggle sidebar">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <nav class="sidebar-nav">
+                <a href="/" class="nav-item" style="border-bottom:1px solid rgba(255,255,255,0.06); margin-bottom:8px; color:var(--teal-light);">
+                    <i class="fas fa-home"></i><span>Project Landing</span>
+                </a>
+                <a href="#" class="nav-item active" data-page="dashboard">
+                    <i class="fas fa-th-large"></i><span>Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="register">
+                    <i class="fas fa-plus-circle"></i><span>Register Patient</span>
+                </a>
+                <a href="#" class="nav-item" data-page="queue">
+                    <i class="fas fa-users"></i><span>Patient Queue</span>
+                </a>
+                <a href="#" class="nav-item" data-page="doctor">
+                    <i class="fas fa-stethoscope"></i><span>Doctor Dashboard</span>
+                </a>
+                <a href="#" class="nav-item" data-page="statistics">
+                    <i class="fas fa-chart-bar"></i><span>Statistics</span>
+                </a>
+                <a href="#" class="nav-item" data-page="visualizer">
+                    <i class="fas fa-project-diagram"></i><span>Algorithm Visualizer</span>
+                </a>
+                <a href="#" class="nav-item" data-page="details">
+                    <i class="fas fa-file-medical"></i><span>Patient Details</span>
+                </a>
+                <a href="#" class="nav-item" data-page="about">
+                    <i class="fas fa-info-circle"></i><span>About Project</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <i class="fas fa-user-circle"></i>
+                    <span id="sidebar-user">Admin</span>
+                </div>
+                <button class="btn-logout" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i><span>Logout</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Top Bar -->
+            <header class="top-bar">
+                <button id="mobile-menu-btn" class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <div class="top-bar-title">
+                    <h2 id="page-title">Dashboard</h2>
+                </div>
+                <div class="top-bar-actions">
+                    <a href="/" class="btn btn-sm btn-outline" style="text-decoration:none;">
+                        <i class="fas fa-home"></i> Project Landing
+                    </a>
+                    <button class="btn btn-sm btn-outline" id="btn-load-demo" onclick="loadDemoData()">
+                        <i class="fas fa-database"></i> Load Demo Data
+                    </button>
+                    <span id="user-role-badge" class="badge badge-primary">Admin</span>
+                </div>
+            </header>
+
+            <!-- Page Container -->
+            <div class="page-container">
+
+                <!-- Toast Notification -->
+                <div id="toast" class="toast" style="display:none;">
+                    <div class="toast-content">
+                        <i class="toast-icon fas fa-check-circle"></i>
+                        <span id="toast-message"></span>
+                    </div>
+                    <button class="toast-close" onclick="hideToast()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- ──────────── DASHBOARD PAGE ──────────── -->
+                <section id="page-dashboard" class="page active">
+                    <div class="stats-grid">
+                        <div class="stat-card stat-total">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-total">0</span>
+                                <span class="stat-label">Total Patients</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-waiting">
+                            <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-waiting">0</span>
+                                <span class="stat-label">Waiting</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-treatment">
+                            <div class="stat-icon"><i class="fas fa-procedures"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-treatment">0</span>
+                                <span class="stat-label">In Treatment</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-completed">
+                            <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-completed">0</span>
+                                <span class="stat-label">Completed</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-emergency">
+                            <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stat-emergency">0</span>
+                                <span class="stat-label">Emergency</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-list-ol"></i> Current Priority Queue</h3>
+                            <button class="btn btn-sm btn-primary" onclick="navigateTo('register')">
+                                <i class="fas fa-plus"></i> Add Patient
+                            </button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table" id="dashboard-queue-table">
+                                <thead>
+                                    <tr>
+                                        <th>Rank</th>
+                                        <th>Patient</th>
+                                        <th>Patient ID</th>
+                                        <th>Condition</th>
+                                        <th>Priority</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="dashboard-queue-body">
+                                    <tr><td colspan="7" class="empty-state">No patients in queue. <a href="#" onclick="loadDemoData()">Load demo data</a> to get started.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── REGISTER PAGE ──────────── -->
+                <section id="page-register" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-user-plus"></i> Patient Registration</h3>
+                        </div>
+                        <form id="register-form" class="form-grid">
+                            <div class="form-group">
+                                <label for="reg-patient-id">Patient ID *</label>
+                                <input type="text" id="reg-patient-id" placeholder="e.g., P006" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-name">Full Name *</label>
+                                <input type="text" id="reg-name" placeholder="Enter full name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-age">Age</label>
+                                <input type="number" id="reg-age" placeholder="Age" min="0" max="150">
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-gender">Gender</label>
+                                <select id="reg-gender">
+                                    <option value="">Select</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-phone">Phone Number</label>
+                                <input type="tel" id="reg-phone" placeholder="Phone number">
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-department">Department</label>
+                                <select id="reg-department">
+                                    <option value="">Select</option>
+                                    <option value="Emergency">Emergency</option>
+                                    <option value="General Medicine">General Medicine</option>
+                                    <option value="Orthopedics">Orthopedics</option>
+                                    <option value="Cardiology">Cardiology</option>
+                                    <option value="Neurology">Neurology</option>
+                                    <option value="Pediatrics">Pediatrics</option>
+                                    <option value="Surgery">Surgery</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-condition">Condition *</label>
+                                <input type="text" id="reg-condition" placeholder="e.g., Fracture, Fever" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-priority">Priority Level * (1–10)</label>
+                                <select id="reg-priority" required>
+                                    <option value="">Select Priority</option>
+                                    <option value="10">10 — Critical / Emergency</option>
+                                    <option value="9">9 — Very Serious</option>
+                                    <option value="8">8 — Serious</option>
+                                    <option value="7">7 — Moderate-High</option>
+                                    <option value="6">6 — Moderate</option>
+                                    <option value="5">5 — Moderate</option>
+                                    <option value="4">4 — Low</option>
+                                    <option value="3">3 — Low</option>
+                                    <option value="2">2 — Routine</option>
+                                    <option value="1">1 — Routine</option>
+                                </select>
+                            </div>
+                            <div class="form-group form-group-full">
+                                <label for="reg-symptoms">Symptoms</label>
+                                <textarea id="reg-symptoms" rows="3" placeholder="Describe symptoms..."></textarea>
+                            </div>
+                            <div class="form-group form-group-full form-actions">
+                                <button type="submit" class="btn btn-primary btn-lg">
+                                    <i class="fas fa-user-plus"></i> Register Patient
+                                </button>
+                                <button type="reset" class="btn btn-outline">
+                                    <i class="fas fa-undo"></i> Reset Form
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="card priority-guide">
+                        <div class="card-header"><h3><i class="fas fa-info-circle"></i> Priority Guide</h3></div>
+                        <div class="priority-levels">
+                            <div class="priority-item critical">
+                                <span class="priority-dot"></span>
+                                <strong>10 — Critical / Emergency</strong>
+                                <span>Life-threatening conditions</span>
+                            </div>
+                            <div class="priority-item serious">
+                                <span class="priority-dot"></span>
+                                <strong>8–9 — Very Serious</strong>
+                                <span>Severe injuries, accidents</span>
+                            </div>
+                            <div class="priority-item moderate">
+                                <span class="priority-dot"></span>
+                                <strong>5–7 — Moderate</strong>
+                                <span>Fractures, moderate pain</span>
+                            </div>
+                            <div class="priority-item low">
+                                <span class="priority-dot"></span>
+                                <strong>3–4 — Low</strong>
+                                <span>Minor ailments</span>
+                            </div>
+                            <div class="priority-item routine">
+                                <span class="priority-dot"></span>
+                                <strong>1–2 — Routine</strong>
+                                <span>Check-ups, mild symptoms</span>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── QUEUE PAGE ──────────── -->
+                <section id="page-queue" class="page">
+                    <div class="queue-controls">
+                        <div class="search-bar">
+                            <i class="fas fa-search"></i>
+                            <input type="text" id="queue-search" placeholder="Search by name, ID, or condition...">
+                        </div>
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-filter="all">All</button>
+                            <button class="filter-btn" data-filter="critical">🔴 Critical</button>
+                            <button class="filter-btn" data-filter="serious">🟠 Serious</button>
+                            <button class="filter-btn" data-filter="moderate">🟡 Moderate</button>
+                            <button class="filter-btn" data-filter="routine">🟢 Routine</button>
+                        </div>
+                        <div class="filter-group">
+                            <button class="filter-btn active" data-status="all">All Status</button>
+                            <button class="filter-btn" data-status="Waiting">Waiting</button>
+                            <button class="filter-btn" data-status="In Treatment">In Treatment</button>
+                            <button class="filter-btn" data-status="Completed">Completed</button>
+                        </div>
+                    </div>
+
+                    <div class="queue-header-bar">
+                        <h3><i class="fas fa-list-ol"></i> Current Patient Queue</h3>
+                        <button class="btn btn-primary" id="btn-call-next-queue" onclick="callNextPatient()">
+                            <i class="fas fa-bullhorn"></i> Call Next Patient
+                        </button>
+                    </div>
+
+                    <div id="queue-list" class="queue-list">
+                        <div class="empty-state-card">
+                            <i class="fas fa-inbox"></i>
+                            <p>No patients in queue.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── DOCTOR DASHBOARD ──────────── -->
+                <section id="page-doctor" class="page">
+                    <div class="doctor-grid">
+                        <div class="card doctor-next-card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-user-clock"></i> Next Patient</h3>
+                            </div>
+                            <div id="doctor-next-patient" class="doctor-patient-display">
+                                <div class="empty-state-card">
+                                    <i class="fas fa-check-circle"></i>
+                                    <p>No patients are currently waiting.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-procedures"></i> Currently In Treatment</h3>
+                            </div>
+                            <div id="doctor-in-treatment" class="doctor-treatment-list">
+                                <div class="empty-state-small">No patients in treatment.</div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header">
+                                <h3><i class="fas fa-history"></i> Recently Completed</h3>
+                            </div>
+                            <div id="doctor-completed" class="doctor-completed-list">
+                                <div class="empty-state-small">No completed treatments yet.</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── STATISTICS PAGE ──────────── -->
+                <section id="page-statistics" class="page">
+                    <div class="stats-grid stats-grid-sm">
+                        <div class="stat-card stat-total">
+                            <div class="stat-icon"><i class="fas fa-users"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stats-total">0</span>
+                                <span class="stat-label">Total Patients</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-emergency">
+                            <div class="stat-icon"><i class="fas fa-ambulance"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stats-emergency">0</span>
+                                <span class="stat-label">Emergency</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-waiting">
+                            <div class="stat-icon"><i class="fas fa-hourglass-half"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stats-waiting">0</span>
+                                <span class="stat-label">Waiting</span>
+                            </div>
+                        </div>
+                        <div class="stat-card stat-completed">
+                            <div class="stat-icon"><i class="fas fa-clipboard-check"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-value" id="stats-completed">0</span>
+                                <span class="stat-label">Completed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="charts-grid">
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-chart-bar"></i> Patients by Priority</h3></div>
+                            <div class="chart-container">
+                                <canvas id="chart-priority"></canvas>
+                            </div>
+                        </div>
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-chart-pie"></i> Patient Status</h3></div>
+                            <div class="chart-container">
+                                <canvas id="chart-status"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── ALGORITHM VISUALIZER ──────────── -->
+                <section id="page-visualizer" class="page">
+                    <div class="viz-layout">
+                        <div class="card viz-main">
+                            <div class="card-header">
+                                <h3><i class="fas fa-project-diagram"></i> Max Heap Visualization</h3>
+                                <div class="viz-controls">
+                                    <button class="btn btn-sm btn-primary" id="viz-insert-btn" onclick="vizInsertDemo()">
+                                        <i class="fas fa-plus"></i> Insert Demo Patient
+                                    </button>
+                                    <button class="btn btn-sm btn-danger" id="viz-extract-btn" onclick="vizExtractMax()">
+                                        <i class="fas fa-arrow-up"></i> Remove Max
+                                    </button>
+                                    <button class="btn btn-sm btn-outline" onclick="vizReset()">
+                                        <i class="fas fa-redo"></i> Reset
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="heap-tree-container" class="heap-tree-container">
+                                <svg id="heap-tree-svg" width="100%" height="400"></svg>
+                                <div id="heap-empty-msg" class="empty-state-card">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <p>Heap is empty. Insert a patient to begin visualization.</p>
+                                </div>
+                            </div>
+                            <div class="heap-array-section">
+                                <h4>Heap Array Representation</h4>
+                                <div id="heap-array-display" class="heap-array">
+                                    <span class="heap-array-empty">[ ]</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="viz-sidebar">
+                            <div class="card">
+                                <div class="card-header"><h3><i class="fas fa-shoe-prints"></i> Operation Steps</h3></div>
+                                <div id="viz-steps" class="viz-steps">
+                                    <p class="viz-step-empty">Perform an operation to see the steps.</p>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header"><h3><i class="fas fa-question-circle"></i> Why Max Heap?</h3></div>
+                                <div class="algo-info">
+                                    <p>A <strong>Max Heap</strong> keeps the highest-priority patient at the root, allowing O(1) access to the most urgent case.</p>
+                                    <table class="table table-compact">
+                                        <thead>
+                                            <tr><th>Operation</th><th>Time</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>Insert Patient</td><td><code>O(log n)</code></td></tr>
+                                            <tr><td>Remove Highest</td><td><code>O(log n)</code></td></tr>
+                                            <tr><td>View Highest</td><td><code>O(1)</code></td></tr>
+                                            <tr><td>Build Heap</td><td><code>O(n)</code></td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header"><h3><i class="fas fa-code"></i> Pseudocode</h3></div>
+                                <div class="pseudocode">
+<pre>
+<span class="kw">START</span>
+
+<span class="kw">Create</span> empty Max Heap
+
+<span class="kw">FOR EACH</span> arriving patient:
+    Read patient details
+    Assign priority
+    <span class="fn">Insert</span> patient into Max Heap
+    <span class="cm">// O(log n) — heapify up</span>
+
+<span class="kw">WHILE</span> patients are waiting:
+    patient ← <span class="fn">ExtractMax</span>(heap)
+    <span class="cm">// O(log n) — heapify down</span>
+    Send patient for consultation
+    Update patient status
+
+<span class="kw">END</span>
+</pre>
+                                </div>
+                            </div>
+
+                            <div class="card">
+                                <div class="card-header"><h3><i class="fas fa-balance-scale"></i> Comparison</h3></div>
+                                <div class="algo-info">
+                                    <table class="table table-compact">
+                                        <thead>
+                                            <tr><th>Approach</th><th>Insert</th><th>Get Max</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="highlight-row"><td><strong>Max Heap</strong></td><td>O(log n)</td><td>O(log n)</td></tr>
+                                            <tr><td>Sorted Array</td><td>O(n)</td><td>O(1)</td></tr>
+                                            <tr><td>Unsorted Array</td><td>O(1)</td><td>O(n)</td></tr>
+                                            <tr><td>Linked List</td><td>O(n)</td><td>O(1)</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── PATIENT DETAILS ──────────── -->
+                <section id="page-details" class="page">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-search"></i> Find Patient</h3>
+                        </div>
+                        <div class="search-bar-full">
+                            <input type="text" id="details-search" placeholder="Search by Patient ID or Name...">
+                            <button class="btn btn-primary" onclick="searchPatientDetails()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="patient-detail-content" class="patient-detail-content" style="display:none;">
+                        <div class="card patient-profile">
+                            <div class="patient-profile-header">
+                                <div class="patient-avatar" id="detail-avatar">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div class="patient-profile-info">
+                                    <h2 id="detail-name">—</h2>
+                                    <span class="badge" id="detail-status-badge">—</span>
+                                    <span class="badge" id="detail-priority-badge">—</span>
+                                </div>
+                            </div>
+                            <div class="patient-detail-grid">
+                                <div class="detail-item"><span class="detail-label">Patient ID</span><span class="detail-value" id="detail-pid">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Age</span><span class="detail-value" id="detail-age">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Gender</span><span class="detail-value" id="detail-gender">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Phone</span><span class="detail-value" id="detail-phone">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Department</span><span class="detail-value" id="detail-dept">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Condition</span><span class="detail-value" id="detail-condition">—</span></div>
+                                <div class="detail-item form-group-full"><span class="detail-label">Symptoms</span><span class="detail-value" id="detail-symptoms">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Priority</span><span class="detail-value" id="detail-priority">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Arrival Time</span><span class="detail-value" id="detail-arrival">—</span></div>
+                                <div class="detail-item"><span class="detail-label">Doctor</span><span class="detail-value" id="detail-doctor">—</span></div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-stream"></i> Status Timeline</h3></div>
+                            <div class="timeline" id="detail-timeline">
+                                <div class="timeline-step completed">
+                                    <div class="timeline-dot"><i class="fas fa-clipboard-list"></i></div>
+                                    <span>Registered</span>
+                                </div>
+                                <div class="timeline-line"></div>
+                                <div class="timeline-step" id="tl-waiting">
+                                    <div class="timeline-dot"><i class="fas fa-clock"></i></div>
+                                    <span>Waiting</span>
+                                </div>
+                                <div class="timeline-line"></div>
+                                <div class="timeline-step" id="tl-treatment">
+                                    <div class="timeline-dot"><i class="fas fa-stethoscope"></i></div>
+                                    <span>In Treatment</span>
+                                </div>
+                                <div class="timeline-line"></div>
+                                <div class="timeline-step" id="tl-completed">
+                                    <div class="timeline-dot"><i class="fas fa-check-circle"></i></div>
+                                    <span>Completed</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- All patients list below the detail -->
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-list"></i> All Patients</h3></div>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead>
+                                        <tr>
+                                            <th>ID</th><th>Name</th><th>Condition</th><th>Priority</th><th>Status</th><th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="details-all-patients">
+                                        <tr><td colspan="6" class="empty-state">No patients registered.</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- ──────────── ABOUT PAGE ──────────── -->
+                <section id="page-about" class="page">
+                    <div class="about-layout">
+                        <div class="card about-card">
+                            <div class="about-header">
+                                <div class="about-icon"><i class="fas fa-hospital"></i></div>
+                                <h2>Hospital Queue Management</h2>
+                                <p class="about-subtitle">Efficient Patient Prioritization Using Priority Queue</p>
+                                <span class="badge badge-info">Academic Prototype — DAA Activity</span>
+                            </div>
+                            <div class="about-grid">
+                                <div class="about-item">
+                                    <i class="fas fa-book"></i>
+                                    <h4>Subject</h4>
+                                    <p>Design and Analysis of Algorithms</p>
+                                </div>
+                                <div class="about-item">
+                                    <i class="fas fa-cogs"></i>
+                                    <h4>Algorithm</h4>
+                                    <p>Priority Queue</p>
+                                </div>
+                                <div class="about-item">
+                                    <i class="fas fa-project-diagram"></i>
+                                    <h4>Data Structure</h4>
+                                    <p>Max Heap</p>
+                                </div>
+                                <div class="about-item">
+                                    <i class="fas fa-bullseye"></i>
+                                    <h4>Objective</h4>
+                                    <p>Efficient patient prioritization</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-users"></i> Team Members</h3></div>
+                            <div class="team-grid">
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Rahul Behrani</h4>
+                                    <span class="badge badge-outline">Roll No. 04</span>
+                                </div>
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Atharva Kadam</h4>
+                                    <span class="badge badge-outline">Roll No. 14</span>
+                                </div>
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Prathamesh Kalagate</h4>
+                                    <span class="badge badge-outline">Roll No. 15</span>
+                                </div>
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Simon Masih</h4>
+                                    <span class="badge badge-outline">Roll No. 19</span>
+                                </div>
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Anuj Tiwari</h4>
+                                    <span class="badge badge-outline">Roll No. 36</span>
+                                </div>
+                                <div class="team-member">
+                                    <div class="team-avatar"><i class="fas fa-user-graduate"></i></div>
+                                    <h4>Adarsh Tiwari</h4>
+                                    <span class="badge badge-outline">Roll No. 35</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-header"><h3><i class="fas fa-route"></i> How It Works</h3></div>
+                            <div class="flow-diagram">
+                                <div class="flow-step"><i class="fas fa-user-plus"></i><span>Patient Registration</span></div>
+                                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                <div class="flow-step"><i class="fas fa-sort-numeric-up"></i><span>Priority Assignment</span></div>
+                                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                <div class="flow-step highlight"><i class="fas fa-project-diagram"></i><span>Max Heap Insertion</span></div>
+                                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                <div class="flow-step"><i class="fas fa-list-ol"></i><span>Priority Queue</span></div>
+                                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                <div class="flow-step"><i class="fas fa-bullhorn"></i><span>Call Next Patient</span></div>
+                                <div class="flow-arrow"><i class="fas fa-arrow-right"></i></div>
+                                <div class="flow-step highlight"><i class="fas fa-arrow-up"></i><span>Extract Max</span></div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <!-- Footer -->
+            <footer class="app-footer">
+                <p>Hospital Queue Management | DAA Activity | Priority Queue using Max Heap</p>
+            </footer>
+        </main>
+    </div>
+
+    <!-- App JS -->
+    <script src="/static/js/heap.js"></script>
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    <script src="/static/js/register.js"></script>
+    <script src="/static/js/queue.js"></script>
+    <script src="/static/js/doctor.js"></script>
+    <script src="/static/js/statistics.js"></script>
+    <script src="/static/js/visualizer.js"></script>
+    <script src="/static/js/details.js"></script>
+</body>
+</html>

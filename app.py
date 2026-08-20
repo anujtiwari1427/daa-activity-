@@ -77,8 +77,10 @@ def create_app():
     return app
 
 
+# Module-level app export for Vercel / WSGI servers
+app = create_app()
+
 if __name__ == '__main__':
-    app = create_app()
     print("\n" + "=" * 60)
     print("  Hospital Queue Management System")
     print("  DAA Project — Priority Queue using Max Heap")

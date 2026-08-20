@@ -11,11 +11,15 @@ DB_PATH = None
 
 
 def _get_db_path():
-    """Get the database file path."""
+    """Get the database file path (supports Vercel /tmp writable directory)."""
     global DB_PATH
     if DB_PATH is None:
-        base = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-        DB_PATH = os.path.join(base, 'database', 'hospital.db')
+        if os.environ.get('VERCEL') or os.environ.get('AWS_LAMBDA_FUNCTION_NAME'):
+            # Vercel serverless functions have a read-only root; /tmp is the writable folder
+            DB_PATH = os.path.join('/tmp', 'hospital.db')
+        else:
+            base = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+            DB_PATH = os.path.join(base, 'database', 'hospital.db')
     return DB_PATH
 
 

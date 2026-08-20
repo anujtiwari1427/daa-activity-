@@ -95,8 +95,12 @@ const navItems = document.querySelectorAll('.nav-item');
 
 navItems.forEach(item => {
     item.addEventListener('click', (e) => {
-        e.preventDefault();
         const page = item.dataset.page;
+        if (!page) {
+            // Normal link like href="/"
+            return;
+        }
+        e.preventDefault();
         navigateTo(page);
         // Close mobile sidebar
         document.getElementById('sidebar').classList.remove('mobile-open');

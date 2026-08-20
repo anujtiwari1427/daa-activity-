@@ -724,42 +724,119 @@ body {
     font-weight: 600;
 }
 
-/* ─── Responsive ──────────────────────────────────────────────── */
-@media (max-width: 968px) {
+/* ─── Responsive Media Queries (Fluid & Mobile Optimized) ─────────── */
+@media (max-width: 1080px) {
+    .hero-section {
+        padding: 130px 4% 70px;
+        gap: 36px;
+    }
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    .team-grid-land {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 900px) {
     .hero-section {
         flex-direction: column;
-        padding-top: 120px;
         text-align: center;
+        padding-top: 110px;
     }
     .hero-content {
         max-width: 100%;
-    }
-    .hero-title {
-        font-size: 2.5rem;
     }
     .hero-actions {
         justify-content: center;
     }
     .hero-badges-bar {
         justify-content: center;
+        flex-wrap: wrap;
     }
     .hero-visual {
-        max-width: 100%;
+        max-width: 520px;
         width: 100%;
+        margin: 0 auto;
+    }
+    .flow-steps-land {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
     .flow-arrow-land {
-        display: none;
+        transform: rotate(90deg);
+        margin: 4px auto;
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
+    .land-nav {
+        padding: 0 4%;
+        height: 64px;
+    }
     .land-links {
         display: none;
     }
-    .hero-title {
-        font-size: 2rem;
+    .land-section {
+        padding: 70px 4%;
+    }
+    .section-title {
+        font-size: 1.9rem;
     }
     .team-grid-land {
         grid-template-columns: 1fr;
+        gap: 18px;
+    }
+    .algo-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+    .cta-title {
+        font-size: 1.75rem;
+    }
+    .cta-box {
+        padding: 36px 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-title {
+        font-size: 2.1rem;
+        line-height: 1.2;
+    }
+    .hero-subtitle {
+        font-size: 0.95rem;
+    }
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .btn-hero-primary,
+    .btn-hero-secondary {
+        width: 100%;
+        justify-content: center;
+        padding: 13px 20px;
+    }
+    .hero-badges-bar {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 14px;
+        text-align: left;
+    }
+    .preview-patient-item {
+        padding: 10px 12px;
+    }
+    .preview-patient-name {
+        font-size: 0.82rem;
+    }
+    .preview-patient-cond {
+        font-size: 0.7rem;
+    }
+    .cta-buttons {
+        flex-direction: column;
+    }
+    .cta-buttons a {
+        width: 100%;
     }
 }

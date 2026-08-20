@@ -29,12 +29,22 @@ from routes import auth_bp, patients_bp, queue_bp, doctor_bp, stats_bp, viz_bp
 
 def create_app():
     """Application factory."""
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    static_dir = os.path.join(base_dir, 'static')
+    template_dir = os.path.join(base_dir, 'templates')
+
     app = Flask(
         __name__,
-        static_folder='static',
-        template_folder='templates'
+        static_folder=static_dir,
+        static_url_path='/static',
+        template_folder=template_dir
     )
     app.config['SECRET_KEY'] = 'daa-hospital-queue-2026'
+
+    # Explicit static route fallback for serverless
+    @app.route('/static/<path:filename>')
+    def custom_static(filename):
+        return send_from_directory(static_dir, filename)
 
     # Enable CORS
     CORS(app)
